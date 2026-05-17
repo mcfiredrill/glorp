@@ -1,5 +1,8 @@
 import { Fetch, RequestManager } from '@warp-drive/core';
 import { getOwner } from '@ember/application';
+import config from 'glorp/config/environment';
+
+const API_HOST = config.APP.apiHost;
 
 const AuthenticatedFetch = {
   request(context: unknown, next: (req: Request) => Promise<Response>) {
@@ -7,16 +10,23 @@ const AuthenticatedFetch = {
     let session = owner.lookup('service:session');
 
     return next((request: Request) => {
-      let headers = new Headers(request.headers);
+      let url = new URL(request.url, API_HOST);
 
+      // clone request onto new URL
+      let nextRequest = new Request(url.toString(), request);
+
+      // add auth header
       if (session.token) {
-        headers.set('Authorization', `Bearer ${session.token}`);
+        nextRequest.headers.set(
+          'Authorization',
+          `Bearer ${session.token}`
+        );
       }
 
-      return new Request(request, { headers });
+      return nextRequest;
     });
   },
 };
 
 export default new RequestManager()
-  .use([AuthenticatedFetch, Fetch]);
+.use([AuthenticatedFetch, Fetch]);

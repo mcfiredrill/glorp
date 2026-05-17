@@ -1,4 +1,5 @@
 import BaseAuthenticator from 'ember-simple-auth/authenticators/base';
+import config from 'glorp/config/environment';
 
 interface LoginResponse {
   token: string;
@@ -7,7 +8,7 @@ interface LoginResponse {
 
 export default class JwtAuthenticator extends BaseAuthenticator {
   async authenticate(email: string, password: string) {
-    let response = await fetch('/users/log_in', {
+    let response = await fetch(`${config.APP.apiHost}/users/log_in`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
