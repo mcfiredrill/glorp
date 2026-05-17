@@ -6,6 +6,7 @@ import loadInitializers from 'ember-load-initializers';
 import config from 'glorp/config/environment';
 import { importSync, isDevelopingApp, macroCondition } from '@embroider/macros';
 import setupInspector from '@embroider/legacy-inspector-support/ember-source-4.12';
+import RequestManager from 'glorp/services/request-manager';
 
 if (macroCondition(isDevelopingApp())) {
   importSync('./deprecation-workflow');
@@ -16,6 +17,7 @@ export default class App extends Application {
   podModulePrefix = config.podModulePrefix;
   Resolver = Resolver.withModules(compatModules);
   inspector = setupInspector(this);
+  requestManager = RequestManager;
 }
 
 loadInitializers(App, config.modulePrefix, compatModules);
