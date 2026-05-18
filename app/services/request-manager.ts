@@ -6,14 +6,14 @@ const API_HOST = config.APP.apiHost;
 
 const AuthenticatedFetch = {
   request(context: unknown, next: (req: Request) => Promise<Response>) {
-    let owner = getOwner(context);
-    let session = owner.lookup('service:session');
+    const owner = getOwner(context);
+    const session = owner.lookup('service:session');
 
     return next((request: Request) => {
-      let url = new URL(request.url, API_HOST);
+      const url = new URL(request.url, API_HOST);
 
       // clone request onto new URL
-      let nextRequest = new Request(url.toString(), request);
+      const nextRequest = new Request(url.toString(), request);
 
       // add auth header
       if (session.token) {
