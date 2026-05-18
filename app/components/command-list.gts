@@ -15,7 +15,7 @@ export default class CommandList extends Component<CommandListSignature> {
   <template>
     <ul>
       {{#each @commands key="id" as |command|}}
-        <li>{{command.name}}</li>
+        <li>{{command.name}} - <a href="{{command.url}}" _target="_blank">{{command.s3Key}}</a> - {{command.mediaType}}</li>
       {{/each}}
     </ul>
   </template>
