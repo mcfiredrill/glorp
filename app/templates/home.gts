@@ -17,6 +17,7 @@ export default class HomeTemplate extends Component<HomeSignature> {
 
   <template>
     {{pageTitle "Home"}}
+    {{log this.session.isAuthenticated}}
     {{#if this.session.isAuthenticated}}
       <Glop />
     {{else}}
