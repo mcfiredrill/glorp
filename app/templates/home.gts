@@ -4,6 +4,7 @@ import { service } from '@ember/service';
 import CommandList from 'glorp/components/command-list';
 import Glop from 'glorp/components/glop';
 import LoginForm from 'glorp/components/login-form';
+import CommandForm from 'glorp/components/command-form';
 import type { HomeRouteModel } from 'glorp/routes/home';
 import SessionService from 'glorp/services/session';
 
@@ -21,6 +22,7 @@ export default class HomeTemplate extends Component<HomeSignature> {
     {{pageTitle "Home"}}
     {{#if this.session.isAuthenticated}}
       <Glop />
+      <CommandForm />
       <CommandList @commands={{@model}} />
     {{else}}
       <LoginForm />
