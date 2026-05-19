@@ -1,4 +1,6 @@
 import Component from '@glimmer/component';
+import { Input } from '@ember/component';
+import { tracked } from '@glimmer/tracking';
 
 export interface CommandFormSignature {
   // The arguments accepted by the component
@@ -12,7 +14,15 @@ export interface CommandFormSignature {
 }
 
 export default class CommandForm extends Component<CommandFormSignature> {
+  @tracked name = '';
+
   <template>
-    {{yield}}
+    <form on "submit" this.submit>
+      <label for="name">Name</label>
+      <Input id="name" @type="text" @value={{this.name}} />
+      <label for="file">File</label>
+      <input id="file" type="file">
+      <input type="submit">Create Command</input>
+    </form>
   </template>
 }
